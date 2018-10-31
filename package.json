@@ -3,12 +3,14 @@
   "name": "featured-item-blocks",
   "version": "0.1.0",
   "description": "Blocks for displaying featured posts and a block editor control to selecting a post as featured.",
-  "keywords": [ "wordpress", "plugin" ],
+  "keywords": [
+    "wordpress",
+    "plugin"
+  ],
   "author": "K Adam White",
   "license": "(Artistic-2.0 OR GPL-2.0-or-later)",
   "scripts": {
     "postinstall": "composer install",
-		"prebuild": "node .bin/clean-build.js",
     "build": "webpack --config=.config/webpack.config.prod.js",
     "eslint": "eslint src .config",
     "phpcs": "vendor/bin/phpcs --standard=phpcs.ruleset.xml -s .",
