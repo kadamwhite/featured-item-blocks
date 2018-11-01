@@ -4,8 +4,6 @@
  */
 namespace FeaturedItemBlocks\Scripts;
 
-require_once( __DIR__ . '/asset-loader.php' );
-
 use FeaturedItemBlocks\Asset_Loader;
 
 /**
@@ -16,17 +14,20 @@ function enqueue_block_editor_assets() {
 	$plugin_url   = trailingslashit( plugin_dir_url( dirname( __FILE__ ) ) );
 	$dev_manifest = $plugin_path . 'build/asset-manifest.json';
 
-	$loaded_dev_assets = Asset_Loader\enqueue_assets( $dev_manifest, [
+	$opts = [
 		'handle' => 'featured-item-blocks-editor',
-	] );
+		'scripts'   => [ 'wp-data', 'wp-blocks', 'wp-plugins', 'wp-edit-post', 'wp-element' ],
+	];
+
+	$loaded_dev_assets = Asset_Loader\enqueue_assets( $dev_manifest, $opts );
 
 	if ( ! $loaded_dev_assets ) {
 		// Production mode. Manually enqueue script bundles.
 		if ( file_exists( $plugin_path . 'build/editor.css' ) ) {
 			wp_enqueue_script(
-				'featured-item-blocks-editor',
+				$opts['handle'],
 				$plugin_url . 'build/editor.js',
-				[],
+				$opts['scripts'],
 				filemtime( $plugin_path . '/build/editor.js' ),
 				true
 			);
@@ -35,7 +36,7 @@ function enqueue_block_editor_assets() {
 
 		if ( file_exists( $plugin_path . 'build/editor.css' ) ) {
 			wp_enqueue_style(
-				'featured-item-blocks-editor',
+				$opts['handle'],
 				$plugin_url . 'build/editor.css',
 				null,
 				filemtime( $plugin_path . 'build/editor.css' )

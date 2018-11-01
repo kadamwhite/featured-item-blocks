@@ -5,4 +5,9 @@
 		<!-- Disable specific dumb rules -->
 		<exclude name="HM.Files.FunctionFileName.WrongFile" />
 	</rule>
+
+	<!-- Blocks must be in a directory that matches the block slug, which sometimes includes dashes -->
+	<rule ref="HM.Files.NamespaceDirectoryName.NameMismatch">
+		<exclude-pattern>inc/blocks/*</exclude-pattern>
+	</rule>
 </ruleset>
