@@ -1,4 +1,4 @@
-const blocks = wp.blocks;
+const { blocks, plugins } = wp;
 const { dispatch, select } = wp.data;
 
 /**
@@ -49,6 +49,16 @@ export const unregisterBlockType = ( name, hot ) => {
 	} );
 }
 
+export const unregisterPlugin = ( name, hot ) => {
+	if ( ! hot ) {
+		return;
+	}
+
+	hot.dispose( () =>  {
+		plugins.unregisterPlugin( name );
+	} );
+}
+
 /**
  * Block registration helper which wraps registerBlockType and contextually
  * attemptes to reselect the re-registered block.
@@ -63,4 +73,8 @@ export const registerBlockType = ( name, options, hot ) => {
 	if ( hot && hot.data && hot.data.clientId ) {
 		dispatch( 'core/editor' ).selectBlock( hot.data.clientId );
 	}
+};
+
+export const registerPlugin = ( name, options ) => {
+	plugins.registerPlugin( name, options );
 };

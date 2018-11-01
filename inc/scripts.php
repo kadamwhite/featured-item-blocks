@@ -16,7 +16,14 @@ function enqueue_block_editor_assets() {
 
 	$opts = [
 		'handle' => 'featured-item-blocks-editor',
-		'scripts' => [ 'wp-blocks', 'wp-components', 'wp-data', 'wp-element' ],
+		'scripts' => [
+			'wp-blocks',
+			'wp-components',
+			'wp-data',
+			'wp-edit-post',
+			'wp-element',
+			'wp-plugins',
+		],
 	];
 
 	$loaded_dev_assets = Asset_Loader\enqueue_assets( $dev_manifest, $opts );
