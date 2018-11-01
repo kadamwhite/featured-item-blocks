@@ -5,9 +5,7 @@
  */
 import {
 	registerBlockType,
-	registerPlugin,
 	unregisterBlockType,
-	unregisterPlugin,
 } from './hmr-helpers';
 
 /**
@@ -37,11 +35,4 @@ autoRegister(
 	require.context( `${ __dirname }/blocks`, true, /index\.js$/ ),
 	registerBlockType,
 	unregisterBlockType
-);
-
-// Load all plugin files.
-autoRegister(
-	require.context( `${ __dirname }/plugins`, true, /index\.js$/ ),
-	registerPlugin,
-	unregisterPlugin
 );

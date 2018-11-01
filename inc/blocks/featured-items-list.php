@@ -35,14 +35,17 @@ function render_featured_items_list( array $attributes = [] ) {
 
 	foreach ( $featured_categories as $category_id ) {
 		$featured_post_ids = $featured_content['posts_by_category'][ $category_id ];
-		$category = get_category( $category_id );
+		$category = get_category( $category_id ); 
 		?>
 		<div class="featured-items-block__category-list wp-block-column">
 			<h2 class="featured-category-title"><?php echo $category->name; ?></h2>
 			<?php
 			if ( $edit_mode ) {
 				// Translators: Display the number of featured posts to display for this category.
-				printf( esc_html( _n( '(%d post)', '(%d posts)', count( $featured_post_ids ), 'featured-item-blocks' ) ) );
+				printf(
+					esc_html( _n( '(%d post)', '(%d posts)', count( $featured_post_ids ), 'featured-item-blocks' ) ),
+					count( $featured_post_ids )
+				);
 				// In edit mode, skip all remaining logic and proceed to next category.
 				continue;
 			}

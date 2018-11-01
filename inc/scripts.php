@@ -16,19 +16,19 @@ function enqueue_block_editor_assets() {
 
 	$opts = [
 		'handle' => 'featured-item-blocks-editor',
-		'scripts'   => [ 'wp-data', 'wp-blocks', 'wp-plugins', 'wp-edit-post', 'wp-element' ],
+		'scripts' => [ 'wp-blocks', 'wp-components', 'wp-data', 'wp-element' ],
 	];
 
 	$loaded_dev_assets = Asset_Loader\enqueue_assets( $dev_manifest, $opts );
 
 	if ( ! $loaded_dev_assets ) {
 		// Production mode. Manually enqueue script bundles.
-		if ( file_exists( $plugin_path . 'build/editor.css' ) ) {
+		if ( file_exists( $plugin_path . 'build/editor.js' ) ) {
 			wp_enqueue_script(
 				$opts['handle'],
 				$plugin_url . 'build/editor.js',
 				$opts['scripts'],
-				filemtime( $plugin_path . '/build/editor.js' ),
+				filemtime( $plugin_path . 'build/editor.js' ),
 				true
 			);
 		}
