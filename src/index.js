@@ -18,7 +18,7 @@ import {
 window.whatModuleExports = exportName => {
 	Object.keys( window.wp ).forEach( packageName => {
 		if ( Object.keys( window.wp[ packageName ] ).includes( exportName ) ) {
-			// eslint-disable-next-line
+			// eslint-disable-next-line no-console
 			console.log( `Export named ${ exportName } found in wp.${ packageName }!` );
 		}
 	} );

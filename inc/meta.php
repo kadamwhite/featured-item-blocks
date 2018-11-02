@@ -14,14 +14,14 @@ function auth_callback( $allowed, $meta_key, $post_id, $user_id ) {
 
 function register_featured_meta() {
 	register_post_meta( 'post', '_featured', [
-		'type'          => 'boolean', // TODO: Change to Boolean.
+		'type'          => 'string', // TODO: Change to Boolean.
 		'description'   => 'Whether or not the post should be included in Featured Items lists.',
 		'auth_callback' => __NAMESPACE__ . '\\auth_callback',
 		'single'        => true,
 		'show_in_rest'  => true,
 	] );
 	register_post_meta( 'post', '_featured-2', [
-		'type'          => 'string', // TODO: Change to Boolean.
+		'type'          => 'string',
 		'description'   => 'Whether or not the post should be included in Featured Items lists.',
 		'auth_callback' => __NAMESPACE__ . '\\auth_callback',
 		'single'        => true,

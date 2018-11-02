@@ -1,37 +1,31 @@
-/* eslint-disable no-console */
 /**
  * WordPress dependencies
  */
 import { CheckboxControl } from '@wordpress/components';
-import { compose } from '@wordpress/element';
+import { compose } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
 import { withSelect, withDispatch } from '@wordpress/data';
 
-const FeaturedItemCheckbox = ( { meta, postType, updateMeta } ) => {
+const FeaturedItemCheckbox = ( { meta, postType, toggleMeta } ) => {
 	if ( postType !== 'post' ) {
 		return null;
 	}
-	console.log( meta );
 	return (
 		<CheckboxControl
 			label={ __( 'Feature this post' ) }
-			checked={ meta._featured }
-			onChange={ () => {
-				console.log( 'Toggled' );
-			} }
+			checked={ meta._featured === 'yes' }
+			onChange={ toggleMeta }
 		/>
 	);
 };
 
 // Fetch the post meta.
 const applyWithSelect = withSelect( select => {
-	const meta = select( 'core/editor' ).getEditedPostAttribute( 'meta' );
-	const postType = select( 'core/editor' ).getCurrentPostType();
-	console.log( meta );
+	const editor = select( 'core/editor' );
 
 	return {
-		meta,
-		postType,
+		meta: editor.getEditedPostAttribute( 'meta' ),
+		postType: editor.getCurrentPostType(),
 	};
 } );
 
@@ -39,15 +33,14 @@ const applyWithSelect = withSelect( select => {
 const applyWithDispatch = withDispatch( ( dispatch, { meta } ) => {
 	const { editPost } = dispatch( 'core/editor' );
 
-	return {
-		updateMeta( newMeta ) {
-			editPost( {
-				meta: {
-					...meta,
-					...newMeta,
-				},
-			} ); // Important: Old and new meta need to be merged in a non-mutating way!
+	const toggleMeta = () => editPost( {
+		meta: {
+			_featured: meta._featured === 'yes' ? null : 'yes',
 		},
+	} );
+
+	return {
+		toggleMeta,
 	};
 } );
 
