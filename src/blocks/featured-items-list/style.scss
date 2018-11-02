@@ -1,0 +1,31 @@
+.featured-items-list {
+	$self: &;
+
+	.wp-block-columns {
+		display: flex;
+		flex-direction: row;
+		align-items: stretch;
+
+		#{ $self }__category-list {
+			flex: 1;
+			box-sizing: border-box;
+			padding: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+	}
+
+	.featured-category-title {
+		padding-right: 10px;
+		font-size: 1em;
+		line-height: 1.2;
+		overflow-wrap: break-word;
+		word-wrap: break-word;
+		word-break: break-word;
+	}
+	span {
+		font-size: 0.8em;
+		font-style: italic;
+	}
+}

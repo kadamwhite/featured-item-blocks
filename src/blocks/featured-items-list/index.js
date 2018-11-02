@@ -1,4 +1,5 @@
-/* eslint-disable no-console */
+import './style.scss';
+
 const { __ } = wp.i18n;
 const { ServerSideRender } = wp.components;
 
@@ -17,7 +18,7 @@ export const options = {
 	attributes: {
 		count: {
 			type: 'number',
-			default: 3,
+			default: 4,
 		},
 		editMode: {
 			// editMode will never actually get set to true, but it is used
@@ -33,8 +34,7 @@ export const options = {
 		},
 	},
 
-	edit( { attributes, setAttributes } ) {
-		console.log( attributes );
+	edit( { attributes } ) {
 		return (
 			<div className="featured-items-list">
 				<ServerSideRender
