@@ -17,11 +17,14 @@
  */
 require_once( __DIR__ . '/inc/asset-loader.php' );
 
+// Register meta.
 require_once( __DIR__ . '/inc/meta.php' );
 FeaturedItemBlocks\Meta\setup();
 
+// Enqueue editor UI scripts & styles.
 require_once( __DIR__ . '/inc/scripts.php' );
 FeaturedItemBlocks\Scripts\setup();
 
-require_once( __DIR__ . '/inc/blocks/featured-items-list.php' );
-FeaturedItemBlocks\Blocks\FeaturedItemsList\setup();
+// Auto-load PHP Editor Blocks.
+require_once( __DIR__ . '/inc/blocks.php' );
+FeaturedItemBlocks\Blocks\autoregister_blocks();
