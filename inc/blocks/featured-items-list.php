@@ -7,6 +7,11 @@ namespace FeaturedItemBlocks\Blocks\FeaturedItemsList;
 
 use WP_Query;
 
+function setup() {
+	add_action( 'init', __NAMESPACE__ . '\\register_block' );
+	add_action( 'save_post', __NAMESPACE__ . '\\clear_featured_categories_transients' );
+}
+
 /**
  * Template function to render a "posted on" date, used within render_category().
  */

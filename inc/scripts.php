@@ -6,6 +6,10 @@ namespace FeaturedItemBlocks\Scripts;
 
 use FeaturedItemBlocks\Asset_Loader;
 
+function setup() {
+	add_action( 'enqueue_block_editor_assets', __NAMESPACE__ . '\\enqueue_block_editor_assets' );
+}
+
 /**
  * Enqueue editor assets based on the generated `asset-manifest.json` file.
  */

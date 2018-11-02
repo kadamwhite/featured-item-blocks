@@ -16,10 +16,12 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 require_once( __DIR__ . '/inc/asset-loader.php' );
+
+require_once( __DIR__ . '/inc/meta.php' );
+FeaturedItemBlocks\Meta\setup();
+
 require_once( __DIR__ . '/inc/scripts.php' );
+FeaturedItemBlocks\Scripts\setup();
+
 require_once( __DIR__ . '/inc/blocks/featured-items-list.php' );
-
-add_action( 'enqueue_block_editor_assets', '\\FeaturedItemBlocks\\Scripts\\enqueue_block_editor_assets' );
-
-add_action( 'init', '\\FeaturedItemBlocks\\Blocks\\FeaturedItemsList\\register_block' );
-add_action( 'save_post', '\\FeaturedItemBlocks\\Blocks\\FeaturedItemsList\\clear_featured_categories_transients' );
+FeaturedItemBlocks\Blocks\FeaturedItemsList\setup();
