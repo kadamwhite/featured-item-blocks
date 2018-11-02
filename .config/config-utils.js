@@ -30,11 +30,11 @@ const devServerPort = () => parseInt( process.env.PORT, 10 ) || 3001;
 const externals = [
 	'blocks',
 	'components',
+	'compose',
 	'data',
-	'editor',
 	'edit-post',
-	'i18n',
 	'element',
+	'i18n',
 	'plugins',
 ].reduce( ( externals, name ) => ( {
 	...externals,
