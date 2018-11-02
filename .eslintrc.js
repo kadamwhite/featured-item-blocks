@@ -47,7 +47,7 @@ module.exports = {
 		'linebreak-style': [ 'error', 'unix' ],
 		'no-console': [ 'warn' ],
 		'no-mixed-spaces-and-tabs': [ 'error', 'smart-tabs' ],
-		'no-multiple-empty-lines': [ 'error', {
+		'no-multiple-empty-lines': [ 'warn', {
 			'max': 1,
 		} ],
 		'no-trailing-spaces': [ 'error' ],
@@ -106,8 +106,5 @@ module.exports = {
 		// Overrides and extensions of the HM config.
 	  "no-debugger": "warn",
 	  "react/react-in-jsx-scope": "off",
-	},
-	"globals": {
-	  "wp": true,
 	},
 };

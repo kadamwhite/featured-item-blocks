@@ -1,5 +1,6 @@
-const { blocks, plugins } = wp;
-const { dispatch, select } = wp.data;
+import * as blocks from '@wordpress/blocks';
+import * as plugins from '@wordpress/plugins';
+import { dispatch, select } from '@wordpress/data';
 
 /**
  * When a selected block is being disposed during a hot module reload, persist

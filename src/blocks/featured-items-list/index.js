@@ -1,7 +1,7 @@
-import './style.scss';
+import { __ } from '@wordpress/i18n';
+import { ServerSideRender } from '@wordpress/components';
 
-const { __ } = wp.i18n;
-const { ServerSideRender } = wp.components;
+import './style.scss';
 
 export const name = 'featured-item-blocks/featured-items-list';
 

@@ -1,8 +1,11 @@
-/* eslint-disable no-console */
-const { __ } = wp.i18n;
-const { CheckboxControl } = wp.components;
-const { Fragment } = wp.element;
-const { PluginSidebar, PluginPostStatusInfo, PluginSidebarMoreMenuItem } = wp.editPost;
+import { Fragment } from '@wordpress/element';
+import {
+	PluginSidebar,
+	PluginPostStatusInfo,
+	PluginSidebarMoreMenuItem,
+} from '@wordpress/edit-post';
+
+import FeaturedItemCheckbox from './featured-item-checkbox';
 
 export const name = 'featured-item-selector';
 
@@ -13,13 +16,7 @@ export const options = {
 		return (
 			<Fragment>
 				<PluginPostStatusInfo>
-					<CheckboxControl
-						label={ __( 'Feature this post' ) }
-						checked={ true }
-						onChange={ () => {
-							console.log( 'Toggled' );
-						} }
-					/>
+					<FeaturedItemCheckbox />
 				</PluginPostStatusInfo>
 				<PluginSidebarMoreMenuItem target="featured-item-selector">
 					Featured Item

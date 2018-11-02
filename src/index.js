@@ -11,6 +11,20 @@ import {
 } from './hmr-helpers';
 
 /**
+ * Debugging utility method to help trace which WP package exports a desired dependency.
+ *
+ * @param {String} exportName The export you are looking for, e.g. `compose` or `BlockIcon`.
+ */
+window.whatModuleExports = exportName => {
+	Object.keys( window.wp ).forEach( packageName => {
+		if ( Object.keys( window.wp[ packageName ] ).includes( exportName ) ) {
+			// eslint-disable-next-line
+			console.log( `Export named ${ exportName } found in wp.${ packageName }!` );
+		}
+	} );
+};
+
+/**
  * Given the results of a require.context() call, require all those files.
  *
  * @param {Object}   requireContext The results of running require.context().

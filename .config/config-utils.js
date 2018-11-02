@@ -30,15 +30,15 @@ const devServerPort = () => parseInt( process.env.PORT, 10 ) || 3001;
 const externals = [
 	'blocks',
 	'components',
+	'data',
 	'editor',
 	'edit-post',
 	'i18n',
 	'element',
+	'plugins',
 ].reduce( ( externals, name ) => ( {
 	...externals,
-	[ `@wordpress/${ name }` ]: {
-		this: [ 'wp', camelCaseDash( name ) ],
-	},
+	[ `@wordpress/${ name }` ]: `wp.${ camelCaseDash( name ) }`,
 } ), {
 	wp: 'wp',
 } );
