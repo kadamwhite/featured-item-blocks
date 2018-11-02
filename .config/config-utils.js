@@ -5,10 +5,19 @@ const { join } = require( 'path' );
 const autoprefixer = require( 'autoprefixer' );
 const postcssFlexbugsFixes = require( 'postcss-flexbugs-fixes' );
 
-const camelCase = str => str.replace(
-	/(?:^\w|[A-Z]|\b\w)/g,
-	( letter, idx ) => ( idx === 0 ? letter : letter.toUpperCase() )
-).replace( /[-\s]+/g, '' );
+/**
+ * Given a string, returns a new string with dash separators converted to
+ * camel-case equivalent. This is not as aggressive as `_.camelCase`, which
+ * which would also upper-case letters following numbers.
+ *
+ * @param {string} string Input dash-delimited string.
+ *
+ * @return {string} Camel-cased string.
+ */
+const camelCaseDash = string => string.replace(
+	/-([a-z])/g,
+	( match, letter ) => letter.toUpperCase()
+);
 
 /**
  * Return the specified port on which to run the dev server.
@@ -25,10 +34,10 @@ const externals = [
 	'edit-post',
 	'i18n',
 	'element',
-].reduce( ( externals, packageName ) => ( {
+].reduce( ( externals, name ) => ( {
 	...externals,
-	[ `@wordpress/${ packageName }` ]: {
-		root: [ 'wp', camelCase( packageName ) ],
+	[ `@wordpress/${ name }` ]: {
+		this: [ 'wp', camelCaseDash( name ) ],
 	},
 } ), {
 	wp: 'wp',
