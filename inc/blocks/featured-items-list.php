@@ -79,12 +79,10 @@ function render_category( $category, $post_ids ) {
  * @param array    $post_ids An array of post IDs to render for this category.
  */
 function render_edit_mode_category( $category, $post_ids ) {
-	$first_featured_image = get_the_post_thumbnail( $post_ids[0] );
 	$post_count = count( $post_ids );
 	?>
 	<div class="featured-items-list__category-list wp-block-column">
 		<h2 class="featured-category-title"><?php echo $category->name; ?></h2>
-		<?php echo $first_featured_image; ?>
 		<span>
 			<?php
 			printf(
