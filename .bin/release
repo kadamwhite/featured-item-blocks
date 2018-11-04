@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# This script will merge `master` into `release`, build updated copies of all
+# generated files, and then commit those files and tag the release. It should
+# be run on a clean HEAD from the master branch, and version numbers should
+# already be bumped in package.json and the plugin PHP file.
+#
+# Usage: npm run release #.#.#
+
 VERSION=$1
 
 # Error if no version number provided.

@@ -17,3 +17,10 @@ This block could be expanded to provide more control to the editor, such as spec
 ## Build Tooling
 
 If you are a developer interested in how to configure Webpack for use with Gutenberg, this project represents what I consider best practice as of Oct 31, 2018, during WordPress 5.0 Beta 2. Hot reloading is present when running `npm start`, blocks are automatically included in the build based on file path, and so on. I release this project in part to spur discussion about what we could do to iterate on or improve our tooling to get maximum benefit from both Gutenberg and Webpack.
+
+### Key Commands
+
+- `npm start`: Run the Webpack development server. WordPress will automatically detect and load the script from the dev server based on the presence of the `asset-manifest.json` the dev server outputs into the build directory.
+- `npm run build`: Build the application into the `build/` directory.
+- `npm run lint`: Run PHPCS and ESLint to check for style issues.
+- `npm run release #.#.#`: Merge master into the release branch, then build and tag release v#.#.#. (Use the version number specified in package.json and the plugin's PHP file.)
