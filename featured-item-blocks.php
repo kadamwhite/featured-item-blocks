@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name: Featured Item Blocks
  * Description: Blocks for displaying featured posts and a block editor control to selecting a post as featured.
- * Version:     0.3.0
+ * Version:     0.3.1
  * Author:      K.Adam White <adam@kadamwhite.com>
  * Author URI:  http://kadamwhite.com
  * License:     GPL-2.0+
