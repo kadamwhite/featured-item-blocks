@@ -14,8 +14,16 @@ export const options = {
 
 	category: 'widgets',
 
-	// These may be editable down the road, but hard-coded is ok for now.
+	supports: {
+		align: [ 'full', 'wide' ],
+	},
+
 	attributes: {
+		align: {
+			type: 'string',
+			default: 'full',
+		},
+		// These may be editable down the road, but hard-coded is ok for now.
 		count: {
 			type: 'number',
 			default: 4,

@@ -45,11 +45,11 @@ function render_category( $category, $post_ids ) {
 		while ( $posts_query->have_posts() ) :
 			$posts_query->the_post();
 			?>
-			<h3 class="entry-title">
+			<strong class="entry-title">
 				<a href="<?php the_permalink(); ?>" rel="bookmark">
 					<?php the_title(); ?>
 				</a>
-			</h3>
+			</strong>
 			<!-- Show featured image only for first post in each category. -->
 			<?php if ( $posts_query->current_post === 0 ) : ?>
 			<div class="featured-image">
@@ -107,6 +107,7 @@ function render_featured_items_list( array $attributes = [] ) {
 	$posts_per_category = (int) $attributes['postsPerCategory'] ?: 3;
 	// Special flag for signaling the use of <ServerSideRender> in the editor view.
 	$edit_mode = (boolean) $attributes['editMode'] ?: false;
+	$align = (string) $attributes['align'] ?: 'full';
 
 	$featured_content = get_cached_featured_categories( $category_count, $posts_per_category );
 	$featured_categories = $featured_content['categories'];
@@ -117,7 +118,11 @@ function render_featured_items_list( array $attributes = [] ) {
 
 	ob_start();
 
-	echo sprintf( '<div class="wp-block-columns has-%s-columns">', count( $featured_categories ) );
+	echo sprintf(
+		'<div class="wp-block-columns has-%s-columns align%s">',
+		count( $featured_categories ),
+		$align
+	);
 
 	foreach ( $featured_categories as $category_id ) {
 		$featured_post_ids = $featured_content['posts_by_category'][ $category_id ];
@@ -143,14 +148,21 @@ function render_featured_items_list( array $attributes = [] ) {
 function register_block() {
 	register_block_type( 'featured-item-blocks/featured-items-list', [
 		'attributes' => [
+			'align' => [
+				'type' => 'string',
+				'default' => 'full',
+			],
 			'count' => [
 				'type' => 'number',
+				'default' => 4,
 			],
 			'editMode' => [
 				'type' => 'boolean',
+				'default' => false,
 			],
 			'postsPerCategory' => [
 				'type' => 'number',
+				'default' => 3,
 			],
 		],
 		'render_callback' => __NAMESPACE__ . '\\render_featured_items_list',
