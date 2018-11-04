@@ -1,0 +1,70 @@
+#!/bin/bash
+
+VERSION=$1
+
+# Error if no version number provided.
+if [[ ! $VERSION ]]
+then
+  echo "Error! No version number provided. Pass in the version being released:"
+  echo "    npm run release #.#.#"
+  echo ""; exit 1
+fi
+
+# Error if malformed version number provided.
+if ! [[ $VERSION =~ ^[0-9]*\.[0-9]*\.[0-9]*$ ]]
+then
+  echo "Error! Called with \"$VERSION\"; use a valid, full version number formatted \"#.#.#\"."
+  echo ""; exit 1
+fi
+
+# Only proceed if on the master branch.
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+if [[ $BRANCH != "master" ]]
+then
+  echo 'Error! Not on master branch. Aborting release.'
+  echo ""; exit 1
+fi
+
+# Only proceed if HEAD is not dirty.
+if [[ $(git diff --shortstat 2> /dev/null | tail -n1) != "" ]]
+then
+  echo "Error! Git repository is dirty. Commit or stash changed files before release."
+  echo ""; exit 1
+fi
+
+# Only proceed if no untracked files are present.
+if [[ $( git status --porcelain 2>/dev/null | grep "^??" | wc -l ) != 0 ]]
+then
+  echo "Error! Untracked files detected. Commit or remove these files before release."
+  echo ""; exit 1
+fi
+
+# Only proceed if provided version number appears in package.json.
+grep -q $VERSION $PWD/package.json
+if [[ $? != 0 ]]
+then
+  echo "Error! Version number $VERSION not found in package.json."
+  echo "Please update both package.json and featured-item-blocks.php to $VERSION."
+  echo ""; exit 1
+fi
+
+# Only proceed if provided version number appears in main plugin PHP file.
+grep -q $VERSION $PWD/featured-item-blocks.php
+if [[ $? != 0 ]]
+then
+  echo "Error! Version number $VERSION not found in featured-item-blocks.php."
+  echo "Please update both package.json and featured-item-blocks.php to $VERSION."
+  echo ""; exit 1
+fi
+
+echo "Preparing release $VERSION"
+
+rm -rf build
+git checkout release
+git merge master -X theirs --no-edit
+npm run build
+git add -f build
+git commit --amend -m "Tag release v$VERSION"
+git tag "v$VERSION"
+
+echo "Release v$VERSION tagged and ready for review."
