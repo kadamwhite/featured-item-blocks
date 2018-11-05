@@ -24,3 +24,10 @@ If you are a developer interested in how to configure Webpack for use with Guten
 - `npm run build`: Build the application into the `build/` directory.
 - `npm run lint`: Run PHPCS and ESLint to check for style issues.
 - `npm run release #.#.#`: Merge master into the release branch, then build and tag release v#.#.#. (Use the version number specified in package.json and the plugin's PHP file.)
+
+## License
+
+This plugin is free software; you can redistribute it and/or modify it under the terms of either:
+
+- the [GNU General Public License](LICENSE.md#gnu-general-public-license) as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version, or
+- the [Artistic License 2.0](LICENSE.md#artistic-license-20)
