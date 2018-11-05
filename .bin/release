@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# This script will merge `master` into `release`, build updated copies of all
+# generated files, and then commit those files and tag the release. It should
+# be run on a clean HEAD from the master branch, and version numbers should
+# already be bumped in package.json and the plugin PHP file.
+#
+# Usage: npm run release #.#.#
+
 VERSION=$1
 
 # Error if no version number provided.
@@ -44,16 +51,16 @@ grep -q $VERSION $PWD/package.json
 if [[ $? != 0 ]]
 then
   echo "Error! Version number $VERSION not found in package.json."
-  echo "Please update both package.json and featured-item-blocks.php to $VERSION."
+  echo "Please update both package.json and plugin.php to $VERSION."
   echo ""; exit 1
 fi
 
 # Only proceed if provided version number appears in main plugin PHP file.
-grep -q $VERSION $PWD/featured-item-blocks.php
+grep -q $VERSION $PWD/plugin.php
 if [[ $? != 0 ]]
 then
-  echo "Error! Version number $VERSION not found in featured-item-blocks.php."
-  echo "Please update both package.json and featured-item-blocks.php to $VERSION."
+  echo "Error! Version number $VERSION not found in plugin.php."
+  echo "Please update both package.json and plugin.php to $VERSION."
   echo ""; exit 1
 fi
 
