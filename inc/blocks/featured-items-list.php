@@ -47,21 +47,23 @@ function render_category( $category, $post_ids ) {
 		while ( $posts_query->have_posts() ) :
 			$posts_query->the_post();
 			?>
-			<strong class="entry-title">
-				<a href="<?php the_permalink(); ?>" rel="bookmark">
-					<?php the_title(); ?>
-				</a>
-			</strong>
-			<!-- Show featured image only for first post in each category. -->
-			<?php if ( $posts_query->current_post === 0 ) : ?>
-			<div class="featured-image">
-				<?php the_post_thumbnail( [ 320, 212 ] ); ?>
-			</div>
-			<?php endif; ?>
+			<div class="featured-items-list__item">
+				<strong class="entry-title">
+					<a href="<?php the_permalink(); ?>" rel="bookmark">
+						<?php the_title(); ?>
+					</a>
+				</strong>
+				<!-- Show featured image only for first post in each category. -->
+				<?php if ( $posts_query->current_post === 0 ) : ?>
+				<div class="featured-image">
+					<?php the_post_thumbnail( [ 320, 212 ] ); ?>
+				</div>
+				<?php endif; ?>
 
-			<small class="entry-meta">
-				<?php posted_on(); ?>
-			</small>
+				<small class="entry-meta">
+					<?php posted_on(); ?>
+				</small>
+			</div>
 		<?php endwhile; ?>
 	</div>
 	<?php
