@@ -3,6 +3,8 @@
  * Server-rendered three-column Featured Posts block.
  */
 // phpcs:disable WordPress.VIP.SlowDBQuery
+// phpcs:disable WordPress.DB.SlowDBQuery
+// phpcs:disable HM.Files.NamespaceDirectoryName.NameMismatch
 namespace FeaturedItemBlocks\Blocks\FeaturedItemsList;
 
 use WP_Query;
@@ -106,8 +108,8 @@ function render_featured_items_list( array $attributes = [] ) {
 	$category_count = (int) $attributes['count'] ?: 4;
 	$posts_per_category = (int) $attributes['postsPerCategory'] ?: 3;
 	// Special flag for signaling the use of <ServerSideRender> in the editor view.
-	$edit_mode = (boolean) $attributes['editMode'] ?: false;
-	$align = (string) $attributes['align'] ?: 'full';
+	$edit_mode = (bool) $attributes['editMode'] ?: false;
+	$align = (string) $attributes['align'];
 
 	$featured_content = get_cached_featured_categories( $category_count, $posts_per_category );
 	$featured_categories = $featured_content['categories'];
@@ -119,9 +121,9 @@ function render_featured_items_list( array $attributes = [] ) {
 	ob_start();
 
 	echo sprintf(
-		'<div class="wp-block-columns has-%s-columns align%s">',
+		'<div class="wp-block-columns has-%s-columns %s">',
 		count( $featured_categories ),
-		$align
+		empty( $align ) ? '' : "align$align"
 	);
 
 	foreach ( $featured_categories as $category_id ) {
