@@ -58,6 +58,7 @@ function render_category( $category, $post_ids ) {
 				<div class="featured-image">
 					<?php the_post_thumbnail( [ 320, 212 ] ); ?>
 				</div>
+				<?php the_excerpt(); ?>
 				<?php endif; ?>
 
 				<small class="entry-meta">
