@@ -9,9 +9,12 @@ namespace FeaturedItemBlocks\Blocks\FeaturedItemsList;
 
 use WP_Query;
 
+const BLOCK_NAME = 'featured-item-blocks/featured-items-list';
+
 function setup() {
 	add_action( 'init', __NAMESPACE__ . '\\register_block' );
 	add_action( 'save_post', __NAMESPACE__ . '\\clear_featured_categories_transients' );
+	add_filter( 'render_block', __NAMESPACE__ . '\\disable_wpautop', 10, 2 );
 }
 
 /**
@@ -60,7 +63,6 @@ function render_category( $category, $post_ids ) {
 				</div>
 				<?php the_excerpt(); ?>
 				<?php endif; ?>
-
 				<small class="entry-meta">
 					<?php posted_on(); ?>
 				</small>
@@ -151,7 +153,7 @@ function render_featured_items_list( array $attributes = [] ) {
  * Register the Featured Items List dynamic block.
  */
 function register_block() {
-	register_block_type( 'featured-item-blocks/featured-items-list', [
+	register_block_type( BLOCK_NAME, [
 		'attributes' => [
 			'align' => [
 				'type' => 'string',
@@ -172,6 +174,22 @@ function register_block() {
 		],
 		'render_callback' => __NAMESPACE__ . '\\render_featured_items_list',
 	] );
+}
+
+/**
+ * Turn off wpautop filter when rendering this block.
+ *
+ * @link https://wordpress.stackexchange.com/q/321662/26317
+ *
+ * @param string $block_content The HTML generated for the block.
+ * @param array  $block         The block.
+ */
+function disable_wpautop( string $block_content, array $block ) {
+	if ( BLOCK_NAME === $block['blockName'] ) {
+		remove_filter( 'the_content', 'wpautop' );
+	}
+
+	return $block_content;
 }
 
 // =================================
