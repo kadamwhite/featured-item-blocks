@@ -1,6 +1,6 @@
 <?php
 /**
- * Conf
+ * Register the meta key used by this plugin.
  */
 namespace FeaturedItemBlocks\Meta;
 

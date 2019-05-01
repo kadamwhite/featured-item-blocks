@@ -2,6 +2,8 @@
 /**
  * Expose methods to retrieve a list of recently-published featured items.
  */
+// phpcs:disable WordPress.VIP.SlowDBQuery
+// phpcs:disable WordPress.DB.SlowDBQuery
 namespace FeaturedItemBlocks\Data;
 
 use FeaturedItemBlocks\Meta;
