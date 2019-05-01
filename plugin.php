@@ -21,6 +21,9 @@ require_once( __DIR__ . '/inc/asset-loader.php' );
 require_once( __DIR__ . '/inc/meta.php' );
 FeaturedItemBlocks\Meta\setup();
 
+// Set up Data namespace methods.
+require_once( __DIR__ . '/inc/data.php' );
+
 // Enqueue editor UI scripts & styles.
 require_once( __DIR__ . '/inc/scripts.php' );
 FeaturedItemBlocks\Scripts\setup();
