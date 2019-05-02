@@ -7,6 +7,7 @@
 namespace FeaturedItemBlocks\Data;
 
 use FeaturedItemBlocks\Meta;
+use WP_Query;
 
 /**
  * Get an array of recent categories containing featured posts.
