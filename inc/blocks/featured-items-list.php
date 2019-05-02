@@ -2,8 +2,6 @@
 /**
  * Server-rendered three-column Featured Posts block.
  */
-// phpcs:disable WordPress.VIP.SlowDBQuery
-// phpcs:disable WordPress.DB.SlowDBQuery
 // phpcs:disable HM.Files.NamespaceDirectoryName.NameMismatch
 namespace FeaturedItemBlocks\Blocks\FeaturedItemsList;
 
@@ -77,6 +75,7 @@ function render_featured_items_list( array $attributes = [] ) {
 		return '';
 	}
 
+	add_filter( 'wp_get_attachment_image_attributes', __NAMESPACE__ . '\\filter_image_attributes', 10, 1 );
 	ob_start();
 
 	echo sprintf(
@@ -99,6 +98,7 @@ function render_featured_items_list( array $attributes = [] ) {
 
 	$block_output = ob_get_contents();
 	ob_end_clean();
+	remove_filter( 'wp_get_attachment_image_attributes', __NAMESPACE__ . '\\filter_image_attributes' );
 
 	return $block_output;
 }
@@ -163,7 +163,21 @@ function render_category( $category, $post_ids ) {
 				<!-- Show featured image only for first post in each category. -->
 				<?php if ( $posts_query->current_post === 0 ) : ?>
 				<div class="featured-image">
-					<?php the_post_thumbnail( [ 320, 212 ] ); ?>
+					<?php
+					the_post_thumbnail(
+						/**
+						 * Filters the size value passed to the_post_thumbnail when rendering
+						 * an image for each column in the featured items block. Accepts an
+						 * array of `[ width, height ]` numeric values, or any registered
+						 * string image size name.
+						 *
+						 * @param string|array $sizes Image size or array of numeric width
+						 *                            and height values (in that order).
+						 * @return string|array Any valid the_post_thumbnail size value.
+						 */
+						apply_filters( 'featured_item_blocks_thumbnail_size', [ 320, 212 ] )
+					);
+					?>
 				</div>
 				<?php the_excerpt(); ?>
 				<?php endif; ?>
@@ -191,4 +205,38 @@ function disable_wpautop( string $block_content, array $block ) {
 	}
 
 	return $block_content;
+}
+
+/**
+ * Filter the "sizes" attribute output as part of a responsive image tag.
+ *
+ * Exposes a new "featured_item_blocks_image_sizes" attribute to allow themes
+ * to explicitly support this block in certain parts of the theme.
+ *
+ * We hard-code the (pre-filter) "sizes" responsive image markup attribute.
+ * The dimensions are calculated assuming the largest possible block width,
+ * i.e. assuming that the block spans the entire viewport.
+ *
+ * The filter this method is hooked to exposes all the attributes below.
+ * However, for our purposes we only need to use that first $attr property.
+ *
+ * @param array        $attr       Attributes for the image markup.
+ * @param WP_Post      $attachment Image attachment post.
+ * @param string|array $size       Requested size. Image size or array of width and height values
+ *                                 (in that order). Default 'thumbnail'.
+ *
+ * @return string The filtered attributes object.
+ */
+function filter_image_attributes( array $attr ) : array {
+	return array_merge( $attr, [
+		/**
+		 * Filters the "sizes" attribute used to select which image size to render
+		 * from the available srcset. A theme relying heavily on this block should
+		 * filter this to match the returned sizes values to the theme breakpoints.
+		 *
+		 * @param string $sizes The computed "sizes" attribute for the image tag.
+		 * @return string A valid "sizes" attribute for a responsive image tag.
+		 */
+		'sizes' => apply_filters( 'featured_item_blocks_image_sizes', '25vw' ),
+	] );
 }
