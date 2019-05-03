@@ -9,6 +9,10 @@ namespace FeaturedItemBlocks\Data;
 use FeaturedItemBlocks\Meta;
 use WP_Query;
 
+function setup() {
+	add_action( 'save_post', __NAMESPACE__ . '\\clear_featured_categories_transients' );
+}
+
 /**
  * Get an array of recent categories containing featured posts.
  *

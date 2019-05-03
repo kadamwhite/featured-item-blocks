@@ -23,6 +23,7 @@ FeaturedItemBlocks\Meta\setup();
 
 // Set up Data namespace methods.
 require_once( __DIR__ . '/inc/data.php' );
+FeaturedItemBlocks\Data\setup();
 
 // Enqueue editor UI scripts & styles.
 require_once( __DIR__ . '/inc/scripts.php' );

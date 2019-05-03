@@ -12,7 +12,6 @@ const BLOCK_NAME = 'featured-item-blocks/featured-items-list';
 
 function setup() {
 	add_action( 'init', __NAMESPACE__ . '\\register_block' );
-	add_action( 'save_post', __NAMESPACE__ . '\\clear_featured_categories_transients' );
 	add_filter( 'render_block', __NAMESPACE__ . '\\disable_wpautop', 10, 2 );
 }
 
