@@ -15,7 +15,6 @@
  * License:     GPL-2.0+ or Artistic License 2.0
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
-require_once( __DIR__ . '/inc/asset-loader.php' );
 
 // Register meta.
 require_once( __DIR__ . '/inc/meta.php' );
@@ -25,7 +24,10 @@ FeaturedItemBlocks\Meta\setup();
 require_once( __DIR__ . '/inc/data.php' );
 FeaturedItemBlocks\Data\setup();
 
-// Enqueue editor UI scripts & styles.
+// Conditionally include bundled asset-loader, then enqueue editor UI scripts & styles.
+if ( ! function_exists( 'Asset_Loader\\autoenqueue' ) ) {
+	require_once( __DIR__ . '/vendor/humanmade/asset-loader/asset-loader.php' );
+}
 require_once( __DIR__ . '/inc/scripts.php' );
 FeaturedItemBlocks\Scripts\setup();
 
