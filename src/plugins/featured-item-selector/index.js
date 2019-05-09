@@ -4,7 +4,7 @@ import FeaturedItemCheckbox from './featured-item-checkbox';
 
 export const name = 'featured-item-selector';
 
-export const options = {
+export const settings = {
 	icon: 'star-empty',
 
 	render() {

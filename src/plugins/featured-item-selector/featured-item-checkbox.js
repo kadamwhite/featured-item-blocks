@@ -8,7 +8,7 @@ import { withSelect, withDispatch } from '@wordpress/data';
 
 const supportedPostTypes = [ 'post' ];
 
-const FeaturedItemCheckbox = ( { meta, postType, toggleMeta } ) => {
+export const FeaturedItemCheckbox = ( { meta, postType, toggleMeta } ) => {
 	if ( ! supportedPostTypes.includes( postType ) ) {
 		return null;
 	}
