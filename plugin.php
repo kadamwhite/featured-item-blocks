@@ -24,12 +24,24 @@ FeaturedItemBlocks\Meta\setup();
 require_once( __DIR__ . '/inc/data.php' );
 FeaturedItemBlocks\Data\setup();
 
-// Conditionally include bundled asset-loader, then enqueue editor UI scripts & styles.
-if ( ! function_exists( 'Asset_Loader\\autoenqueue' ) ) {
-	require_once( __DIR__ . '/vendor/humanmade/asset-loader/asset-loader.php' );
-}
-require_once( __DIR__ . '/inc/scripts.php' );
-FeaturedItemBlocks\Scripts\setup();
+// Conditionally enqueue editor UI scripts & styles.
+add_action( 'plugins_loaded', function() {
+	if ( function_exists( 'Asset_Loader\\autoenqueue' ) ) {
+		require_once( __DIR__ . '/inc/scripts.php' );
+		FeaturedItemBlocks\Scripts\setup();
+	} else {
+		add_action( 'admin_notices', function() {
+			// Deliberately omit .is-dismissible from these classes.
+			echo '<div class="notice notice-error">';
+			echo '<p>';
+			echo 'The Featured Image Blocks plugin will not work properly unless the ';
+			echo '<a href="https://github.com/humanmade/asset-loader">Asset Loader plugin</a>';
+			echo ' is installed &amp; active!';
+			echo '</p>';
+			echo '</div>';
+		} );
+	}
+} );
 
 // Auto-load PHP Editor Blocks.
 require_once( __DIR__ . '/inc/blocks.php' );

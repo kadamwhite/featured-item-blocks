@@ -1,9 +1,6 @@
 {
   "name": "kadamwhite/featured-item-blocks",
   "description": "A WordPress editor plugin and blocks to select & display featured items",
-  "require": {
-    "humanmade/asset-loader" : "dev-master"
-  },
   "require-dev": {
     "humanmade/coding-standards" : "dev-master"
   },
