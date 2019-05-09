@@ -5,7 +5,7 @@ import './style.scss';
 
 export const name = 'featured-item-blocks/featured-items-list';
 
-export const options = {
+export const settings = {
 	title: __( 'Featured Items List' ),
 
 	description: __( 'Display a list of featured items.' ),
