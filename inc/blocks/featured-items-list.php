@@ -2,7 +2,7 @@
 /**
  * Server-rendered three-column Featured Posts block.
  */
-// phpcs:disable HM.Files.NamespaceDirectoryName.NameMismatch
+
 namespace FeaturedItemBlocks\Blocks\FeaturedItemsList;
 
 use FeaturedItemBlocks\Data;
@@ -146,6 +146,7 @@ function render_category( $category, $post_ids ) {
 		'post__in' => $post_ids,
 		'orderby'  => 'post__in',
 	] );
+	// phpcs:disable Generic.WhiteSpace.ScopeIndent
 	?>
 	<div class="featured-items-list__category-list wp-block-column">
 		<h2 class="featured-category-title"><?php echo $category->name; ?></h2>
@@ -187,6 +188,7 @@ function render_category( $category, $post_ids ) {
 		<?php endwhile; ?>
 	</div>
 	<?php
+	// phpcs:enable Generic.WhiteSpace.ScopeIndent
 	wp_reset_postdata();
 }
 
