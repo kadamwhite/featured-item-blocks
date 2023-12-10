@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name: Featured Item Blocks
  * Description: Blocks for displaying featured posts and a block editor control to selecting a post as featured.
- * Version:     0.6.1
+ * Version:     0.6.2
  * Author:      K.Adam White <adam@kadamwhite.com>
  * Author URI:  http://kadamwhite.com
  * License:     GPL-2.0+ or Artistic License 2.0
@@ -26,7 +26,7 @@ FeaturedItemBlocks\Data\setup();
 
 // Conditionally enqueue editor UI scripts & styles.
 add_action( 'plugins_loaded', function() {
-	if ( function_exists( 'Asset_Loader\\autoenqueue' ) ) {
+	if ( function_exists( 'Asset_Loader\\enqueue_asset' ) ) {
 		require_once( __DIR__ . '/inc/scripts.php' );
 		FeaturedItemBlocks\Scripts\setup();
 	} else {
