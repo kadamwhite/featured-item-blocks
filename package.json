@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "featured-item-blocks",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Blocks for displaying featured posts and a block editor control to selecting a post as featured.",
   "keywords": [
     "wordpress",
