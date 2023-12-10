@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# This script will merge `master` into `release`, build updated copies of all
+# This script will merge `main` into `release`, build updated copies of all
 # generated files, and then commit those files and tag the release. It should
-# be run on a clean HEAD from the master branch, and version numbers should
+# be run on a clean HEAD from the main branch, and version numbers should
 # already be bumped in package.json and the plugin PHP file.
 #
 # Usage: npm run release #.#.#
@@ -24,11 +24,11 @@ then
   echo ""; exit 1
 fi
 
-# Only proceed if on the master branch.
+# Only proceed if on the main branch.
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [[ $BRANCH != "master" ]]
+if [[ $BRANCH != "main" ]]
 then
-  echo 'Error! Not on master branch. Aborting release.'
+  echo 'Error! Not on main branch. Aborting release.'
   echo ""; exit 1
 fi
 
@@ -40,7 +40,7 @@ then
 fi
 
 # Only proceed if no untracked files are present.
-if [[ $( git status --porcelain 2>/dev/null | grep "^??" | wc -l ) != 0 ]]
+if [[ $( git status --porcelain 2>/dev/null | grep "^??" | wc -l | tr -d '[:space:]' ) != 0 ]]
 then
   echo "Error! Untracked files detected. Commit or remove these files before release."
   echo ""; exit 1
@@ -68,7 +68,8 @@ echo "Preparing release $VERSION"
 
 rm -rf build
 git checkout release
-git merge master -X theirs --no-edit
+git merge main -X theirs --no-edit
+rm build/*
 npm run build
 git add -f build
 git commit --amend -m "Tag release v$VERSION"
