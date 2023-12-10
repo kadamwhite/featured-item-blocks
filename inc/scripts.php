@@ -17,9 +17,9 @@ function enqueue_block_editor_assets() {
 	$plugin_path  = trailingslashit( plugin_dir_path( dirname( __FILE__ ) ) );
 	$dev_manifest = $plugin_path . 'build/asset-manifest.json';
 
-	Asset_Loader\autoenqueue( $dev_manifest, 'editor.js', [
+	Asset_Loader\enqueue_asset( $dev_manifest, 'editor.js', [
 		'handle' => 'featured-item-blocks-editor',
-		'scripts' => [
+		'dependencies' => [
 			'wp-blocks',
 			'wp-components',
 			'wp-compose',

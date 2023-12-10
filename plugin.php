@@ -26,7 +26,7 @@ FeaturedItemBlocks\Data\setup();
 
 // Conditionally enqueue editor UI scripts & styles.
 add_action( 'plugins_loaded', function() {
-	if ( function_exists( 'Asset_Loader\\autoenqueue' ) ) {
+	if ( function_exists( 'Asset_Loader\\enqueue_asset' ) ) {
 		require_once( __DIR__ . '/inc/scripts.php' );
 		FeaturedItemBlocks\Scripts\setup();
 	} else {
