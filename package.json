@@ -11,7 +11,7 @@
   "license": "(Artistic-2.0 OR GPL-2.0-or-later)",
   "scripts": {
     "postinstall": "composer install",
-    "build": "webpack --config=.config/webpack.config.prod.js",
+    "build": "wp-scripts build",
     "eslint": "eslint src .config",
     "phpcs": "vendor/bin/phpcs --standard=phpcs.ruleset.xml -s .",
     "lint": "npm run eslint && npm run phpcs",

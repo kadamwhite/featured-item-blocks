@@ -14,20 +14,20 @@ function setup() {
  * Enqueue editor assets based on the generated `asset-manifest.json` file.
  */
 function enqueue_block_editor_assets() {
-	$plugin_path  = trailingslashit( plugin_dir_path( dirname( __FILE__ ) ) );
-	$dev_manifest = $plugin_path . 'build/production-asset-manifest.json';
+	$editor_asset_file = include( dirname( __DIR__ ) . '/build/editor.asset.php' );
 
-	Asset_Loader\enqueue_asset( $dev_manifest, 'editor.js', [
-		'handle' => 'featured-item-blocks-editor',
-		'dependencies' => [
-			'wp-blocks',
-			'wp-components',
-			'wp-compose',
-			'wp-data',
-			'wp-edit-post',
-			'wp-element',
-			'wp-i18n',
-			'wp-plugins',
-		],
-	] );
+	if ( empty( $editor_asset_file ) ) {
+		trigger_error( 'Featured item blocks editor bundle not present. Has the build been run?', E_USER_NOTICE );
+		return;
+	}
+
+	wp_enqueue_script(
+		'featured-item-blocks-editor',
+		plugin_dir_url( __DIR__ ) . '/build/editor.js',
+		$editor_asset_file['dependencies'],
+		$editor_asset_file['version'],
+		[
+			'strategy' => 'defer'
+		]
+	);
 }

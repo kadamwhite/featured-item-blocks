@@ -43,6 +43,8 @@ add_action( 'plugins_loaded', function() {
 	}
 } );
 
-// Auto-load PHP Editor Blocks.
-require_once( __DIR__ . '/inc/blocks.php' );
-FeaturedItemBlocks\Blocks\autoregister_blocks();
+// Load PHP Editor Blocks.
+require_once __DIR__ . '/inc/blocks/featured-items-list.php';
+add_action( 'init', function(): void {
+	register_block_type_from_metadata( __DIR__ . '/build/blocks/featured-items-list/block.json' );
+} );
