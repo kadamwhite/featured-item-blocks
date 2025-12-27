@@ -1,52 +1,19 @@
-import { __ } from '@wordpress/i18n';
-import { ServerSideRender } from '@wordpress/components';
+/* eslint-disable import/no-unresolved,prettier/prettier */
+import { registerBlockType } from '@wordpress/blocks';
+import { ServerSideRender } from '@wordpress/server-side-render';
 
 import './style.scss';
 
-export const name = 'featured-item-blocks/featured-items-list';
+import metadata from './block.json';
 
-export const settings = {
-	title: __( 'Featured Items List' ),
-
-	description: __( 'Display a list of featured items.' ),
-
-	icon: 'star-empty',
-
-	category: 'widgets',
-
-	supports: {
-		align: [ 'full', 'wide' ],
-	},
-
-	attributes: {
-		align: {
-			type: 'string',
-			default: 'full',
-		},
-		// These may be editable down the road, but hard-coded is ok for now.
-		count: {
-			type: 'number',
-			default: 4,
-		},
-		editMode: {
-			// editMode will never actually get set to true, but it is used
-			// to flag that the PHP rendering of this block should skip any
-			// post queries not needed in edit mode. (Only registered
-			// attributes may be passed to the ServerSideRender component.)
-			type: 'boolean',
-			default: false,
-		},
-		postsPerCategory: {
-			type: 'number',
-			default: 3,
-		},
-	},
+registerBlockType( metadata.name, {
+	...metadata,
 
 	edit( { attributes } ) {
 		return (
 			<div className="featured-items-list">
 				<ServerSideRender
-					block={ name }
+					block={ metadata.name }
 					attributes={ {
 						...attributes,
 						editMode: true,
@@ -60,4 +27,4 @@ export const settings = {
 		// Dynamic Block: render in PHP.
 		return null;
 	},
-};
+} );

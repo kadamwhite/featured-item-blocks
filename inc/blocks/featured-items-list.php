@@ -5,11 +5,13 @@
 
 namespace FeaturedItemBlocks\Blocks\FeaturedItemsList;
 
-use FeaturedItemBlocks\Data;
 use WP_Query;
 
 const BLOCK_NAME = 'featured-item-blocks/featured-items-list';
 
+/**
+ * Connect namespace functions to hooks.
+ */
 function setup() {
 	add_action( 'init', __NAMESPACE__ . '\\register_block' );
 	add_filter( 'render_block', __NAMESPACE__ . '\\disable_wpautop', 10, 2 );
@@ -28,81 +30,6 @@ function posted_on() {
 }
 
 /**
- * Register the Featured Items List dynamic block.
- */
-function register_block() {
-	register_block_type( BLOCK_NAME, [
-		'attributes' => [
-			'align' => [
-				'type' => 'string',
-				'default' => 'full',
-			],
-			'count' => [
-				'type' => 'number',
-				'default' => 4,
-			],
-			'editMode' => [
-				'type' => 'boolean',
-				'default' => false,
-			],
-			'postsPerCategory' => [
-				'type' => 'number',
-				'default' => 3,
-			],
-		],
-		'render_callback' => __NAMESPACE__ . '\\render_featured_items_list',
-	] );
-}
-
-/**
- * Render the Featured Items List block.
- *
- * @param array $attributes The block attributes.
- * @return string The rendered block markup, as an HTML string.
- */
-function render_featured_items_list( array $attributes = [] ) {
-	$category_count = (int) $attributes['count'] ?: 4;
-	$posts_per_category = (int) $attributes['postsPerCategory'] ?: 3;
-	// Special flag for signaling the use of <ServerSideRender> in the editor view.
-	$edit_mode = (bool) $attributes['editMode'] ?: false;
-	$align = (string) $attributes['align'];
-
-	$featured_content = Data\get_cached_featured_categories( $category_count, $posts_per_category );
-	$featured_categories = $featured_content['categories'];
-
-	if ( ! count( $featured_categories ) ) {
-		return '';
-	}
-
-	add_filter( 'wp_get_attachment_image_attributes', __NAMESPACE__ . '\\filter_image_attributes', 10, 1 );
-	ob_start();
-
-	echo sprintf(
-		'<div class="wp-block-columns has-%s-columns %s">',
-		count( $featured_categories ),
-		empty( $align ) ? '' : "align$align"
-	);
-
-	foreach ( $featured_categories as $category_id ) {
-		$featured_post_ids = $featured_content['posts_by_category'][ $category_id ];
-		$category = get_category( $category_id );
-		if ( $edit_mode ) {
-			render_edit_mode_category( $category, $featured_post_ids );
-		} else {
-			render_category( $category, $featured_post_ids );
-		}
-	}
-
-	echo '</div>';
-
-	$block_output = ob_get_contents();
-	ob_end_clean();
-	remove_filter( 'wp_get_attachment_image_attributes', __NAMESPACE__ . '\\filter_image_attributes' );
-
-	return $block_output;
-}
-
-/**
  * Render the Gutenberg-side version of a  featured category listing.
  *
  * The editor does not need to see the full preview while editing, as the number
@@ -118,13 +45,13 @@ function render_edit_mode_category( $category, $post_ids ) {
 	$post_count = count( $post_ids );
 	?>
 	<div class="featured-items-list__category-list wp-block-column">
-		<h2 class="featured-category-title"><?php echo $category->name; ?></h2>
+		<h2 class="featured-category-title"><?php echo esc_html( $category->name ); ?></h2>
 		<span>
 			<?php
 			printf(
 				// Translators: Indicate the number of posts which will display for this category on the frontend.
 				esc_html( _n( '(%d post)', '(%d posts)', $post_count, 'featured-item-blocks' ) ),
-				$post_count
+				esc_html( $post_count )
 			);
 			?>
 		</span>
@@ -149,7 +76,7 @@ function render_category( $category, $post_ids ) {
 	// phpcs:disable Generic.WhiteSpace.ScopeIndent
 	?>
 	<div class="featured-items-list__category-list wp-block-column">
-		<h2 class="featured-category-title"><?php echo $category->name; ?></h2>
+		<h2 class="featured-category-title"><?php echo esc_html( $category->name ); ?></h2>
 		<?php
 		while ( $posts_query->have_posts() ) :
 			$posts_query->the_post();
@@ -228,7 +155,7 @@ function disable_wpautop( string $block_content, array $block ) {
  *
  * @return string The filtered attributes object.
  */
-function filter_image_attributes( array $attr ) : array {
+function filter_image_attributes( array $attr ): array {
 	return array_merge( $attr, [
 		/**
 		 * Filters the "sizes" attribute used to select which image size to render

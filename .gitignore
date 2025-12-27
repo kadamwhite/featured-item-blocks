@@ -4,5 +4,4 @@ vendor/
 
 build/
 
-package-lock.json
 composer.lock
