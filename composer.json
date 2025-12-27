@@ -12,5 +12,8 @@
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "scripts": {
+    "lint": "phpcs --standard=phpcs.ruleset.xml -s ."
   }
 }

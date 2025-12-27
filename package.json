@@ -16,8 +16,8 @@
     "phpcs": "vendor/bin/phpcs --standard=phpcs.ruleset.xml -s .",
     "lint": "npm run eslint && npm run phpcs",
     "release": "bash .bin/release",
-    "start": "webpack-dev-server --config .config/webpack.config.dev.js",
-    "test": "jest"
+    "start": "wp-scripts start",
+    "test": "wp-scripts test-unit-js --passWithNoTests"
   },
   "devDependencies": {
     "@wordpress/scripts": "^31.2.0"
