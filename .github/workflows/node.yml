@@ -1,6 +1,38 @@
 name: Node
 
-on: workflow_call
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - main
+  pull_request:
+    types:
+      - opened
+      - ready_for_review
+      - synchronize
+    # Only run on a given PR if relevant files have changed.
+    # (Both Node and PHP tasks will be dispatched, but they will exit early if
+    # relevant files for that language are not altered within the PR.)
+    paths:
+      - '.github/workflows/node.yml'
+      - '**.js'
+      - '**.jsx'
+      - '.nvmrc'
+      - '.babelrc.js'
+      - '.eslintrc'
+      - '.eslintrc.js'
+      - '.eslintignore'
+      - 'package.json'
+      - 'package-lock.json'
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-node
+  cancel-in-progress: true
 
 jobs:
   node:
