@@ -1,10 +1,10 @@
-import { PluginPostStatusInfo } from '@wordpress/edit-post';
+/* eslint-disable import/no-unresolved,prettier/prettier */
+import { registerPlugin } from '@wordpress/plugins';
+import { PluginPostStatusInfo } from '@wordpress/editor';
 
 import FeaturedItemCheckbox from './featured-item-checkbox';
 
-export const name = 'featured-item-selector';
-
-export const settings = {
+registerPlugin( 'featured-item-selector', {
 	icon: 'star-empty',
 
 	render() {
@@ -14,4 +14,4 @@ export const settings = {
 			</PluginPostStatusInfo>
 		);
 	},
-};
+} );

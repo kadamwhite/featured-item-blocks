@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "featured-item-blocks",
-  "version": "0.6.3",
+  "version": "0.7.0",
   "description": "Blocks for displaying featured posts and a block editor control to selecting a post as featured.",
   "keywords": [
     "wordpress",
@@ -11,8 +11,8 @@
   "license": "(Artistic-2.0 OR GPL-2.0-or-later)",
   "scripts": {
     "postinstall": "composer install",
-    "build": "webpack --config=.config/webpack.config.prod.js",
-    "eslint": "eslint src .config",
+    "build": "wp-scripts build",
+    "eslint": "wp-scripts lint-js",
     "phpcs": "vendor/bin/phpcs --standard=phpcs.ruleset.xml -s .",
     "lint": "npm run eslint && npm run phpcs",
     "release": "bash .bin/release",
@@ -20,26 +20,6 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@humanmade/webpack-helpers": "^0.12.0",
-    "@wordpress/babel-preset-default": "^4.1.0",
-    "acorn": "^6.1.1",
-    "ajv": "^6.9.2",
-    "babel-eslint": "^10.0.1",
-    "babel-plugin-transform-react-jsx": "^6.24.1",
-    "block-editor-hmr": "^0.4.0-beta.1",
-    "eslint": "^5.16.0",
-    "eslint-config-humanmade": "^0.6.0",
-    "eslint-config-react-app": "^3.0.8",
-    "eslint-plugin-flowtype": "^3.6.1",
-    "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4",
-    "jest": "^24.7.1",
-    "node-sass": "^4.11.0",
-    "rimraf": "^2.6.2",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.3.1"
+    "@wordpress/scripts": "^31.2.0"
   }
 }
