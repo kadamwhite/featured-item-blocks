@@ -4,12 +4,16 @@
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "require-dev": {
-    "humanmade/coding-standards" : "dev-master"
+    "humanmade/coding-standards" : "dev-upgrade-wpcs",
+    "staabm/annotate-pull-request-from-checkstyle": "^1.8"
   },
   "minimum-stability": "dev",
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "scripts": {
+    "lint": "phpcs --standard=phpcs.ruleset.xml -s ."
   }
 }

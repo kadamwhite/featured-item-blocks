@@ -5,11 +5,13 @@
 
 namespace FeaturedItemBlocks\Blocks\FeaturedItemsList;
 
-use FeaturedItemBlocks\Data;
 use WP_Query;
 
 const BLOCK_NAME = 'featured-item-blocks/featured-items-list';
 
+/**
+ * Connect namespace functions to hooks.
+ */
 function setup() {
 	add_action( 'init', __NAMESPACE__ . '\\register_block' );
 	add_filter( 'render_block', __NAMESPACE__ . '\\disable_wpautop', 10, 2 );
@@ -43,13 +45,13 @@ function render_edit_mode_category( $category, $post_ids ) {
 	$post_count = count( $post_ids );
 	?>
 	<div class="featured-items-list__category-list wp-block-column">
-		<h2 class="featured-category-title"><?php echo $category->name; ?></h2>
+		<h2 class="featured-category-title"><?php echo esc_html( $category->name ); ?></h2>
 		<span>
 			<?php
 			printf(
 				// Translators: Indicate the number of posts which will display for this category on the frontend.
 				esc_html( _n( '(%d post)', '(%d posts)', $post_count, 'featured-item-blocks' ) ),
-				$post_count
+				esc_html( $post_count )
 			);
 			?>
 		</span>
@@ -74,7 +76,7 @@ function render_category( $category, $post_ids ) {
 	// phpcs:disable Generic.WhiteSpace.ScopeIndent
 	?>
 	<div class="featured-items-list__category-list wp-block-column">
-		<h2 class="featured-category-title"><?php echo $category->name; ?></h2>
+		<h2 class="featured-category-title"><?php echo esc_html( $category->name ); ?></h2>
 		<?php
 		while ( $posts_query->have_posts() ) :
 			$posts_query->the_post();
@@ -153,7 +155,7 @@ function disable_wpautop( string $block_content, array $block ) {
  *
  * @return string The filtered attributes object.
  */
-function filter_image_attributes( array $attr ) : array {
+function filter_image_attributes( array $attr ): array {
 	return array_merge( $attr, [
 		/**
 		 * Filters the "sizes" attribute used to select which image size to render

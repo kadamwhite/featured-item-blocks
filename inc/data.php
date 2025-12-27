@@ -2,6 +2,7 @@
 /**
  * Expose methods to retrieve a list of recently-published featured items.
  */
+
 // phpcs:disable WordPress.VIP.SlowDBQuery
 // phpcs:disable WordPress.DB.SlowDBQuery
 namespace FeaturedItemBlocks\Data;
@@ -9,6 +10,9 @@ namespace FeaturedItemBlocks\Data;
 use FeaturedItemBlocks\Meta;
 use WP_Query;
 
+/**
+ * Conect namespace functions to hooks.
+ */
 function setup() {
 	add_action( 'save_post', __NAMESPACE__ . '\\clear_featured_categories_transients' );
 }
@@ -38,19 +42,17 @@ function get_featured_categories( int $category_count = 4, int $posts_per_catego
 	// $featured_posts_by_category is an associative array of ordered arrays of
 	// post IDs by category, keyed by category ID: in the below example, posts
 	// 120 & 134 from category 24 & post 145 from category 34 will be included.
-	//     {
-	//         '24': [ 120, 134 ],
-	//         '34': [ 145 ]
-	//     }
+	// { '24': [ 120, 134 ], '34': [ 145 ] }
 	$featured_posts_by_category = [];
 
-	// Numeric array of IDs of posts to be featured (order does not matter)
+	// Numeric array of IDs of posts to be featured (order does not matter).
 	$featured_post_ids = [];
 
 	while ( count( $featured_category_ids ) < $category_count ) {
 		$featured_post_query = new WP_Query( [
 			'post_type'        => 'post',
 			'meta_key'         => Meta\FEATURED_ITEM_META_KEY,
+			// phpcs:ignore HM.Performance.SlowMetaQuery -- Cached.
 			'meta_value'       => 'yes',
 			// Most recent first.
 			'orderby'        => 'date',
@@ -73,10 +75,10 @@ function get_featured_categories( int $category_count = 4, int $posts_per_catego
 		] );
 		$category_id = $categories[0];
 
-		// Store the post ID for future __not_in usage
+		// Store the post ID for future __not_in usage.
 		array_push( $featured_post_ids, $post_id );
 
-		// Store the category ID for future __not_in usage
+		// Store the category ID for future __not_in usage.
 		array_push( $featured_category_ids, $category_id );
 
 		// Add to our featured categories dictionary: category__not_in ensures we
@@ -90,6 +92,7 @@ function get_featured_categories( int $category_count = 4, int $posts_per_catego
 		$additional_posts_query = new WP_Query( [
 			'post_type'      => 'post',
 			'meta_key'       => '_featured',
+			// phpcs:ignore HM.Performance.SlowMetaQuery -- Cached.
 			'meta_value'     => 'yes',
 			// Most recent first.
 			'orderby'        => 'date',
@@ -106,9 +109,9 @@ function get_featured_categories( int $category_count = 4, int $posts_per_catego
 		] );
 
 		foreach ( $additional_posts_query->posts as $post_id ) {
-			// Store the post ID for future __not_in usage
+			// Store the post ID for future __not_in usage.
 			array_push( $featured_post_ids, $post_id );
-			// Add the post ID to the dictionary of posts by category
+			// Add the post ID to the dictionary of posts by category.
 			array_push( $featured_posts_by_category[ $category_id ], $post_id );
 		}
 
@@ -135,14 +138,19 @@ function transient_key( int $category_count, int $posts_per_category ) {
 }
 
 /**
-* Get up to 2 posts for each of the four most recent categories, for display
-* on the homepage. Retrieve the data from a transient if possible to reduce
-* repeat DB interactions; this generates a lot of queries under the hood!
-*
-* @returns array[string]array Array with keys "posts" and "categories" holding
-* arrays of objects keyed by the IDs for those posts and categories, and key
-* "posts_by_category" containing a dictionary of posts to show for each category
-*/
+ * Get up to 2 posts for each of the four most recent categories, for display
+ * on the homepage. Retrieve the data from a transient if possible to reduce
+ * repeat DB interactions; this generates a lot of queries under the hood!
+ *
+ * @returns array[string]array Array with keys "posts" and "categories" holding
+ * arrays of objects keyed by the IDs for those posts and categories, and key
+ * "posts_by_category" containing a dictionary of posts to show for each category.
+ *
+ * @param int $category_count     Number of recent featured categories to show.
+ * @param int $posts_per_category Maximim number of posts to include per category.
+ *
+ * @return array Array with keys "posts" and "categories".
+ */
 function get_cached_featured_categories( int $category_count = 4, int $posts_per_category = 3 ) {
 	$transient_key = transient_key( $category_count, $posts_per_category );
 	$existing_data = get_transient( $transient_key );
