@@ -9,6 +9,8 @@
 		<!-- Disable specific dumb rules -->
 		<exclude name="HM.Files.FunctionFileName.WrongFile" />
 		<exclude-pattern>build/*</exclude-pattern>
+		<!-- Deprecated. -->
+		<exclude name="Generic.Functions.CallTimePassByReference" />
 	</rule>
 
 	<!-- Blocks must be in a directory that matches the block slug, which sometimes includes dashes -->
