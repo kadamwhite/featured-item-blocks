@@ -4,7 +4,8 @@
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "require-dev": {
-    "humanmade/coding-standards" : "dev-upgrade-wpcs"
+    "humanmade/coding-standards" : "dev-upgrade-wpcs",
+    "staabm/annotate-pull-request-from-checkstyle": "^1.8"
   },
   "minimum-stability": "dev",
   "config": {
