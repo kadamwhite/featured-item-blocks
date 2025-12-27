@@ -18,11 +18,10 @@ if ( ! count( $featured_categories ) ) {
 
 add_filter( 'wp_get_attachment_image_attributes', '\\FeaturedItemBlocks\\Blocks\\FeaturedItemsList\\filter_image_attributes', 10 );
 
-
 printf(
 	'<div class="wp-block-columns has-%s-columns %s">',
 	count( $featured_categories ),
-	empty( $align ) ? '' : "align$align"
+	esc_html( empty( $align ) ? '' : "align$align" )
 );
 
 foreach ( $featured_categories as $category_id ) {

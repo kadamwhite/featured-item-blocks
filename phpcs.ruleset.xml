@@ -1,9 +1,14 @@
 <?xml version="1.0"?>
 <ruleset>
+	<config name="testVersion" value="8.2" />
+
 	<!-- Use HM Coding Standards -->
 	<rule ref="vendor/humanmade/coding-standards">
+		<!-- We like to document extra params of hooks even if we don't use them. -->
+		<exclude name="Squiz.Commenting.FunctionComment.ExtraParamComment" />
 		<!-- Disable specific dumb rules -->
 		<exclude name="HM.Files.FunctionFileName.WrongFile" />
+		<exclude-pattern>build/*</exclude-pattern>
 	</rule>
 
 	<!-- Blocks must be in a directory that matches the block slug, which sometimes includes dashes -->

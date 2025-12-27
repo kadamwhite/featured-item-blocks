@@ -4,7 +4,7 @@
   "type": "wordpress-plugin",
   "license": "GPL-2.0-or-later",
   "require-dev": {
-    "humanmade/coding-standards" : "dev-master"
+    "humanmade/coding-standards" : "dev-upgrade-wpcs"
   },
   "minimum-stability": "dev",
   "config": {
