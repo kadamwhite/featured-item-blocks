@@ -17,7 +17,7 @@ jobs:
       node_version: 24
       source_branch: main
       release_branch: release
-      built_asset_paths: assets/dist
+      built_asset_paths: build
       build_script: |
         npm ci
         npm run build
