@@ -1,7 +1,6 @@
 name: PHP
 
 on:
-  workflow_dispatch:
   workflow_call:
   push:
     branches:
@@ -14,17 +13,18 @@ on:
       - synchronize
     # Only run on a given PR if relevant files have changed.
     paths:
+      - '.github/workflows/php.yml'
       - '**.php'
       - 'composer.json'
       - 'composer.lock'
-      - 'phpcs.xml'
+      - 'phpcs.ruleset.xml'
 
 defaults:
   run:
     shell: bash
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-php
   cancel-in-progress: true
 
 jobs:
