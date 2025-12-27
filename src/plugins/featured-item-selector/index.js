@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved,prettier/prettier */
 import { registerPlugin } from '@wordpress/plugins';
 import { PluginPostStatusInfo } from '@wordpress/editor';
 

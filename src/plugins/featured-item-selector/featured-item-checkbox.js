@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved,prettier/prettier */
 /**
  * WordPress dependencies
  */

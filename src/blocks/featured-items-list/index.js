@@ -1,4 +1,4 @@
-import { __ } from '@wordpress/i18n';
+/* eslint-disable import/no-unresolved,prettier/prettier */
 import { registerBlockType } from '@wordpress/blocks';
 import { ServerSideRender } from '@wordpress/server-side-render';
 

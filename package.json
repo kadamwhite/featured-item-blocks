@@ -12,7 +12,7 @@
   "scripts": {
     "postinstall": "composer install",
     "build": "wp-scripts build",
-    "eslint": "eslint src .config",
+    "eslint": "wp-scripts lint-js",
     "phpcs": "vendor/bin/phpcs --standard=phpcs.ruleset.xml -s .",
     "lint": "npm run eslint && npm run phpcs",
     "release": "bash .bin/release",
